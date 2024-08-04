@@ -1,17 +1,19 @@
-package com.waffiq.bazz_list.ui.gallery
+package com.waffiq.bazz_list.ui.tasks
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.waffiq.bazz_list.databinding.FragmentGalleryBinding
+import com.waffiq.bazz_list.databinding.FragmentTasksBinding
+import com.waffiq.bazz_list.utils.helper.OnFabClickListener
 
-class GalleryFragment : Fragment() {
+class TasksFragment : Fragment(), OnFabClickListener {
 
-  private var _binding: FragmentGalleryBinding? = null
+  private var _binding: FragmentTasksBinding? = null
 
   // This property is only valid between onCreateView and
   // onDestroyView.
@@ -23,12 +25,12 @@ class GalleryFragment : Fragment() {
     savedInstanceState: Bundle?
   ): View {
     val galleryViewModel =
-      ViewModelProvider(this)[GalleryViewModel::class.java]
+      ViewModelProvider(this)[TaskViewModel::class.java]
 
-    _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+    _binding = FragmentTasksBinding.inflate(inflater, container, false)
     val root: View = binding.root
 
-    val textView: TextView = binding.textGallery
+    val textView: TextView = binding.tvTask
     galleryViewModel.text.observe(viewLifecycleOwner) {
       textView.text = it
     }
@@ -38,5 +40,9 @@ class GalleryFragment : Fragment() {
   override fun onDestroyView() {
     super.onDestroyView()
     _binding = null
+  }
+
+  override fun onFabClick() {
+    Toast.makeText(context, "FAB clicked in FragmentTask", Toast.LENGTH_SHORT).show()
   }
 }

@@ -37,7 +37,7 @@ android {
   }
   buildTypes {
     debug {
-      isDebuggable = false
+      isDebuggable = true
 
       // disable below for faster development flow.
 //      shrinkResources true
@@ -75,4 +75,10 @@ dependencies {
   androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
 
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+
+  // room
+  implementation("androidx.room:room-runtime:2.6.1")
+  implementation("androidx.room:room-ktx:2.6.1")
+  implementation("androidx.legacy:legacy-support-v4:1.0.0")
+  ksp("androidx.room:room-compiler:2.6.1")
 }

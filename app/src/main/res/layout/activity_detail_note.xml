@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".ui.notes.DetailNoteActivity">
+
+  <com.google.android.material.appbar.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <com.google.android.material.appbar.MaterialToolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="?attr/colorPrimaryVariant"
+      android:theme="@style/MyThemeOverlay_Toolbar"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+      app:popupTheme="@style/Theme.BAZZList.PopupOverlay"
+      app:subtitleTextColor="@color/gray_900"
+      app:title="@string/note" />
+
+  </com.google.android.material.appbar.AppBarLayout>
+
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraint_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <EditText
+      android:id="@+id/et_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:autofillHints="Title"
+      android:background="@null"
+      android:fontFamily="@font/nunito_sans_bold"
+      android:hint="@string/title"
+      android:inputType="text"
+      android:minHeight="48dp"
+      android:paddingHorizontal="20dp"
+      android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+      android:id="@+id/tv_date_now"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:paddingStart="20dp"
+      android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/et_title"
+      tools:text="Saturday, August 3 14:38"
+      tools:ignore="RtlSymmetry" />
+
+    <TextView
+      android:id="@+id/tv_total_characters"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="5dp"
+      android:text="@string/zero_characters"
+      android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+      app:layout_constraintStart_toEndOf="@+id/tv_date_now"
+      app:layout_constraintTop_toBottomOf="@+id/et_title"
+      tools:text=" |  5 Characters" />
+
+    <EditText
+      android:id="@+id/et_description"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:autofillHints="Description"
+      android:background="@null"
+      android:hint="@string/start_typing"
+      android:inputType="text"
+      android:minHeight="48dp"
+      android:paddingHorizontal="20dp"
+      android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+      app:layout_constraintTop_toBottomOf="@+id/tv_date_now" />
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

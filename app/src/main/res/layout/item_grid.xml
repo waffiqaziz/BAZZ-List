@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/container"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_margin="8dp"
+  app:cardCornerRadius="16dp"
+  app:cardElevation="8dp"
+  app:cardBackgroundColor="@color/white"
+  android:padding="16dp">
+
+  <LinearLayout
+    android:padding="15dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="start">
+
+    <TextView
+      android:id="@+id/tv_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:fontFamily="@font/nunito_sans_bold"
+      android:maxLines="1"
+      android:ellipsize="end"
+      android:textColor="@color/gray_900"
+      android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+      tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit" />
+
+    <TextView
+      android:id="@+id/tv_description"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:maxLines="4"
+      android:ellipsize="end"
+      android:textColor="@color/gray_700"
+      android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+      tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
+
+    <TextView
+      android:id="@+id/tv_date"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:gravity="center"
+      android:textColor="@color/gray_400"
+      android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+      tools:text="Yesterday 14:23" />
+  </LinearLayout>
+
+</androidx.cardview.widget.CardView>

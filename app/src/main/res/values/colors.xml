@@ -4,8 +4,16 @@
   <color name="teal_700">#FF018786</color>
   <color name="black">#FF000000</color>
   <color name="white">#FFFFFFFF</color>
+  <color name="light_gray">#FFF7EB</color>
   <color name="gray">#161619</color>
   <color name="gray_900">#252629</color>
   <color name="gray_800">#48484C</color>
+  <color name="gray_700">#606165</color>
+  <color name="gray_400">#ADAEB3</color>
+  <color name="gray_300">#C1C2C7</color>
+  <color name="gray_200">#D3D4D9</color>
+  <color name="gray_100">#DEDFE4</color>
   <color name="yellow">#FFD130</color>
+
+  <color name="textColorPrimary">#333333</color>
 </resources>

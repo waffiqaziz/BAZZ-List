@@ -1,13 +1,13 @@
-package com.waffiq.bazz_list.ui.gallery
+package com.waffiq.bazz_list.ui.tasks
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class GalleryViewModel : ViewModel() {
+class TaskViewModel : ViewModel() {
 
   private val _text = MutableLiveData<String>().apply {
-    value = "This is gallery Fragment"
+    value = "This is task Fragment"
   }
   val text: LiveData<String> = _text
 }

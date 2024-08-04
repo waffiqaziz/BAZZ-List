@@ -15,9 +15,9 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.waffiq.bazz_list.R
 import com.waffiq.bazz_list.databinding.ActivityMainBinding
+import com.waffiq.bazz_list.utils.helper.OnFabClickListener
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,17 +31,12 @@ class MainActivity : AppCompatActivity() {
 
     setSupportActionBar(binding.appBarMain.toolbar)
 
-    binding.appBarMain.fab.setOnClickListener { view ->
-      Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-        .setAction("Action", null).show()
-    }
     val drawerLayout: DrawerLayout = binding.drawerLayout
     val navView: NavigationView = binding.navView
 
-//    val navController = findNavController(R.id.nav_host_fragment_content_main)
     appBarConfiguration = AppBarConfiguration(
       setOf(
-        R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+        R.id.nav_note, R.id.nav_task, R.id.nav_slideshow
       ), drawerLayout
     )
 
@@ -49,11 +44,16 @@ class MainActivity : AppCompatActivity() {
       supportFragmentManager
         .findFragmentById(R.id.nav_host_fragment_content_main)?.findNavController()
 
-    if (navController != null){
+    if (navController != null) {
       setupActionBarWithNavController(navController, appBarConfiguration)
       navView.setupWithNavController(navController)
     }
 
+    setupStatusBar()
+    fabClickListener()
+  }
+
+  private fun setupStatusBar() {
     // change icon color status bar based on light/dark mode
     when (this.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
       Configuration.UI_MODE_NIGHT_YES -> {
@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity() {
           window.decorView.systemUiVisibility = 0
         }
       }
+
       Configuration.UI_MODE_NIGHT_NO -> {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
           window.insetsController?.setSystemBarsAppearance(
@@ -78,8 +79,21 @@ class MainActivity : AppCompatActivity() {
           window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
       }
+
       Configuration.UI_MODE_NIGHT_UNDEFINED -> {
       }
+
+    }
+  }
+
+  private fun fabClickListener() {
+
+    binding.appBarMain.fab.setOnClickListener { view ->
+
+      val navHostFragment =
+        supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
+      val currentFragment = navHostFragment?.childFragmentManager?.fragments?.get(0)
+      if (currentFragment is OnFabClickListener) currentFragment.onFabClick()
     }
   }
 

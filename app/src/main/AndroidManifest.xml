@@ -13,15 +13,19 @@
     android:theme="@style/Theme.BAZZList"
     tools:targetApi="34">
     <activity
+      android:name=".ui.notes.DetailNoteActivity"
+      android:exported="false"
+      android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+    <activity
       android:name=".ui.RoutingActivity"
       android:exported="true"
       android:theme="@style/SplashScreenTheme">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
+
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-
     <activity
       android:name=".ui.MainActivity"
       android:exported="false"
