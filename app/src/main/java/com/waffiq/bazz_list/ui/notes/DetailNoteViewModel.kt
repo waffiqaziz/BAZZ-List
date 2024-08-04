@@ -28,7 +28,7 @@ class DetailNoteViewModel(
 
   fun updateNote(note: Note){
     viewModelScope.launch {
-      val result = notesUseCase.updateNote(note.id, note.title, note.description)
+      val result = notesUseCase.updateNote(note.id, note.title, note.description, note.dateModified)
       _dbResult.postValue(Event(result))
     }
   }

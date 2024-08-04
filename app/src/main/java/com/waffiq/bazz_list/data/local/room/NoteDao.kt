@@ -28,6 +28,6 @@ interface NoteDao {
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   suspend fun insert(noteDao: NoteEntity)
 
-  @Query("UPDATE $NOTES_TABLE_NAME SET title = :title, description = :description WHERE id = :id")
-  suspend fun update(id: Int, title: String, description: String): Int
+  @Query("UPDATE $NOTES_TABLE_NAME SET title = :title, description = :description, dateModified = :dateModified   WHERE id = :id")
+  suspend fun update(id: Int, title: String, description: String, dateModified: Long): Int
 }

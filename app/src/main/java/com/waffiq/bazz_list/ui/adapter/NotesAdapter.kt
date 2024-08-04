@@ -16,7 +16,8 @@ import com.waffiq.bazz_list.utils.helper.Helpers.formatTimestampCard
 
 class NotesAdapter(
   private val onItemLongClick: (Note) -> Unit,
-  private val onItemSelected: (Note, Boolean) -> Unit
+  private val onItemSelected: (Note, Boolean) -> Unit,
+  private val onNoteClick: (Note) -> Unit // Add this callback for normal click handling
 ) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
   private val listNote = ArrayList<Note>()
   private val selectedItems = mutableSetOf<Note>()
@@ -60,7 +61,6 @@ class NotesAdapter(
       binding.tvTitle.text = note.title
       binding.tvDate.text = formatTimestampCard(note.dateModified)
 
-      // Set background color based on selection state
       val context = binding.root.context
       binding.container.setCardBackgroundColor(
         if (selectedItems.contains(note)) ContextCompat.getColor(context, R.color.gray_100)
@@ -71,17 +71,16 @@ class NotesAdapter(
         if (isSelectionMode) {
           toggleSelection(note)
         } else {
-          // Normal click action (e.g., open detail view)
-          val intent = Intent(it.context, DetailNoteActivity::class.java)
-          intent.putExtra(DetailNoteActivity.EXTRA_NOTE, note)
-          it.context.startActivity(intent)
+          onNoteClick(note) // Call the normal click callback
         }
       }
 
       binding.container.setOnLongClickListener {
-        isSelectionMode = true
-        toggleSelection(note)
-        onItemLongClick(note)
+        if (!isSelectionMode) {
+          isSelectionMode = true
+          toggleSelection(note)
+          onItemLongClick(note)
+        }
         true
       }
     }
@@ -96,6 +95,12 @@ class NotesAdapter(
       }
       notifyItemChanged(adapterPosition)
     }
+  }
+
+  fun clearSelection() {
+    selectedItems.clear()
+    isSelectionMode = false
+    notifyDataSetChanged()
   }
 
   fun deleteSelectedItems() {
@@ -118,7 +123,7 @@ class NotesAdapter(
       oldList[oldItemPosition].id == newList[newItemPosition].id
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-      (oldList[oldItemPosition].id == newList[newItemPosition].id &&
-        oldList[oldItemPosition].description == newList[newItemPosition].description)
+      oldList[oldItemPosition].id == newList[newItemPosition].id
+        && oldList[oldItemPosition].description == newList[newItemPosition].description
   }
 }

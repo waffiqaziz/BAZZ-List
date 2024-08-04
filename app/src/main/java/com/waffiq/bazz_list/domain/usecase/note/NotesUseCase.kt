@@ -11,5 +11,5 @@ interface NotesUseCase {
   suspend fun deleteMultipleNotes(notes: List<Note>): DbResult
   suspend fun deleteALlNotes(): DbResult
   suspend fun insertNote(note: Note): DbResult
-  suspend fun updateNote(id: Int, title: String, description: String): DbResult
+  suspend fun updateNote(id: Int, title: String, description: String, dateModified: Long): DbResult
 }

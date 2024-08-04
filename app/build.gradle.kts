@@ -76,7 +76,7 @@ dependencies {
 
   coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
 
-  // room
+  // room database
   implementation("androidx.room:room-runtime:2.6.1")
   implementation("androidx.room:room-ktx:2.6.1")
   implementation("androidx.legacy:legacy-support-v4:1.0.0")

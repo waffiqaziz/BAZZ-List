@@ -26,9 +26,10 @@ class LocalDataSource private constructor(private val noteDao: NoteDao) : LocalD
   override suspend fun updateNote(
     id: Int,
     title: String,
-    description: String
+    description: String,
+    dateModified: Long,
   ): DbResult = executeDbOperation {
-    noteDao.update(id, title, description)
+    noteDao.update(id, title, description, dateModified)
   }
 
   companion object {

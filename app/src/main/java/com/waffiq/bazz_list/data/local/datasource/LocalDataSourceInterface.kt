@@ -16,7 +16,7 @@ interface LocalDataSourceInterface {
   fun getAllNotesSortDateDesc(): Flow<List<NoteEntity>>
 
   suspend fun insertNote(noteEntity: NoteEntity): DbResult
-  suspend fun updateNote(id: Int, title: String, description: String): DbResult
+  suspend fun updateNote(id: Int, title: String, description: String, dateModified: Long): DbResult
   suspend fun deleteNote(id: Int): DbResult
   suspend fun deleteMultipleNotes(notes: List<Note>): DbResult
   suspend fun deleteALlNotes(): DbResult

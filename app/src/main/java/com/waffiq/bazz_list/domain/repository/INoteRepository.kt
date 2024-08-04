@@ -8,7 +8,7 @@ interface INoteRepository {
   val getAllNotes: Flow<List<Note>>
   val getAllNotesSortDateDesc: Flow<List<Note>>
   suspend fun insert(note: Note): DbResult
-  suspend fun update(id: Int, title: String, description: String): DbResult
+  suspend fun update(id: Int, title: String, description: String, dateModified: Long): DbResult
   suspend fun deleteItem(id: Int): DbResult
   suspend fun deleteMultiple(notes: List<Note>): DbResult
   suspend fun deleteALl(): DbResult
