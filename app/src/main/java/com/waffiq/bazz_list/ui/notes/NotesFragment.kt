@@ -32,6 +32,7 @@ class NotesFragment : Fragment(), OnFabClickListener {
   private val selectedItems = mutableSetOf<Note>()
   private var isMultiSelect = false
   private var deleteMenuItem: MenuItem? = null
+  private var cancelMenuItem: MenuItem? = null
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -47,7 +48,8 @@ class NotesFragment : Fragment(), OnFabClickListener {
         menu.clear()
         menuInflater.inflate(R.menu.main, menu)
         deleteMenuItem = menu.findItem(R.id.action_delete)
-        updateDeleteMenuItemVisibility()
+        cancelMenuItem = menu.findItem(R.id.action_cancel)
+        updateMenuItemsVisibility()
       }
 
       override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -56,7 +58,10 @@ class NotesFragment : Fragment(), OnFabClickListener {
             deleteSelectedItems()
             true
           }
-
+          R.id.action_cancel -> {
+            cancelSelectionMode()
+            true
+          }
           else -> false
         }
       }
@@ -70,7 +75,7 @@ class NotesFragment : Fragment(), OnFabClickListener {
   }
 
   private fun showNotes() {
-    notesAdapter = NotesAdapter(::onItemLongClick, ::onItemSelected)
+    notesAdapter = NotesAdapter(::onItemLongClick, ::onItemSelected, ::onNoteClick) // Pass the normal click callback
     val staggeredGridLayoutManager =
       StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
     binding.rvNotes.layoutManager = staggeredGridLayoutManager
@@ -79,14 +84,13 @@ class NotesFragment : Fragment(), OnFabClickListener {
       notesAdapter.setNote(it)
     }
 
-    // observe any function
+    // Observe any function
     notesViewModel.dbResult.observe(viewLifecycleOwner) {
       it.getContentIfNotHandled().let { dbResult ->
         when (dbResult) {
           is DbResult.Success -> showToast(
             dbResult.message ?: getString(R.string.operation_successful)
           )
-
           is DbResult.Error -> showToast(dbResult.errorMessage)
           else -> {}
         }
@@ -95,26 +99,44 @@ class NotesFragment : Fragment(), OnFabClickListener {
   }
 
   private fun onItemLongClick(note: Note) {
-    notesViewModel.deleteNote(note.id)
+    isMultiSelect = true
+    onItemSelected(note, true)
+    updateMenuItemsVisibility()
   }
 
   private fun onItemSelected(note: Note, isSelected: Boolean) {
     if (isSelected) selectedItems.add(note)
     else selectedItems.remove(note)
 
-    // Request to recreate the options menu
     isMultiSelect = selectedItems.isNotEmpty()
-    updateDeleteMenuItemVisibility()
+    updateMenuItemsVisibility()
+  }
+
+  private fun onNoteClick(note: Note) {
+    val intent = Intent(requireContext(), DetailNoteActivity::class.java)
+    intent.putExtra(DetailNoteActivity.EXTRA_NOTE, note)
+    startActivity(intent)
   }
 
   private fun deleteSelectedItems() {
     val notesToDelete = selectedItems.toList()
     notesViewModel.deleteMultipleNotes(notesToDelete)
     notesAdapter.deleteSelectedItems()
+    selectedItems.clear()
+    isMultiSelect = false
+    updateMenuItemsVisibility()
   }
 
-  private fun updateDeleteMenuItemVisibility() {
+  private fun cancelSelectionMode() {
+    selectedItems.clear()
+    isMultiSelect = false
+    notesAdapter.clearSelection()
+    updateMenuItemsVisibility()
+  }
+
+  private fun updateMenuItemsVisibility() {
     deleteMenuItem?.isVisible = isMultiSelect
+    cancelMenuItem?.isVisible = isMultiSelect
   }
 
   private fun showToast(text: String) {

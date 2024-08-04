@@ -33,6 +33,8 @@ class NoteRepository(
   override suspend fun insert(note: Note): DbResult =
     localDataSource.insertNote(note.toNoteEntity())
 
-  override suspend fun update(id: Int, title: String, description: String): DbResult =
-    localDataSource.updateNote(id, title, description)
+  override suspend fun update(id: Int, title: String, description: String, dateModified: Long): DbResult =
+    localDataSource.updateNote(id, title, description, dateModified)
+
+
 }

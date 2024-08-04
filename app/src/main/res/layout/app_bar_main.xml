@@ -17,6 +17,7 @@
       android:layout_height="?attr/actionBarSize"
       android:background="?attr/colorPrimaryVariant"
       android:theme="@style/MyThemeOverlay_Toolbar"
+      app:menu="@menu/main"
       app:popupTheme="@style/Theme.BAZZList.PopupOverlay"
       app:subtitleTextColor="@color/gray_900"
       app:titleTextColor="@color/gray_900" />

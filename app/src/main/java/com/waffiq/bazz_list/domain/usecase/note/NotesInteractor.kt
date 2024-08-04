@@ -18,6 +18,6 @@ class NotesInteractor(
   override suspend fun insertNote(note: Note) =
     iNoteRepository.insert(note)
 
-  override suspend fun updateNote(id: Int, title: String, description: String) =
-    iNoteRepository.update(id, title, description)
+  override suspend fun updateNote(id: Int, title: String, description: String, dateModified: Long) =
+    iNoteRepository.update(id, title, description, dateModified)
 }

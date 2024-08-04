@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
   <!-- Base application theme. -->
-  <style name="Theme.BAZZList" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+  <style name="Theme.BAZZList" parent="Theme.MaterialComponents.Light.NoActionBar">
     <item name="fontFamily">@font/nunito_sans_regular</item>
 
     <!-- Primary brand color. -->
@@ -38,6 +38,7 @@
 
   <style name="MyThemeOverlay_Toolbar" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
     <item name="colorOnPrimary">@color/gray_900</item>
+    <item name="colorControlNormal">@color/gray_900</item>
     <item name="fontFamily">@font/nunito_sans_bold</item>
   </style>
 

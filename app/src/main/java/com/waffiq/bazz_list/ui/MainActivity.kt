@@ -29,11 +29,12 @@ class MainActivity : AppCompatActivity() {
     binding = ActivityMainBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
+    // setup action bar
     setSupportActionBar(binding.appBarMain.toolbar)
 
+    // setup navigation drawer
     val drawerLayout: DrawerLayout = binding.drawerLayout
     val navView: NavigationView = binding.navView
-
     appBarConfiguration = AppBarConfiguration(
       setOf(
         R.id.nav_note, R.id.nav_task, R.id.nav_slideshow
@@ -86,17 +87,15 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
+  // implemented fab
   private fun fabClickListener() {
-
     binding.appBarMain.fab.setOnClickListener { view ->
-
       val navHostFragment =
         supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main)
       val currentFragment = navHostFragment?.childFragmentManager?.fragments?.get(0)
       if (currentFragment is OnFabClickListener) currentFragment.onFabClick()
     }
   }
-
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
     // Inflate the menu; this adds items to the action bar if it is present.
