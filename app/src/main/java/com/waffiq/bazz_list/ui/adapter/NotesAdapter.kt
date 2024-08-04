@@ -2,10 +2,6 @@ package com.waffiq.bazz_list.ui.adapter
 
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Typeface
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
@@ -60,74 +56,52 @@ class NotesAdapter(
     fun bind(note: Note) {
       data = note
 
-//      if(note.title.isNotEmpty()){
-//        binding.tvDescription.text = note.description
-//        binding.tvTitle.text = note.title
-//      }else {
-//        val newlineIndex = note.description.indexOf("\n")
-//        val spannableString = SpannableString(note.description)
-//
-//        if (newlineIndex != -1) {
-//          // Bold the first line
-//          spannableString.setSpan(
-//            StyleSpan(Typeface.BOLD),
-//            0,
-//            newlineIndex,
-//            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-//          )
-//        } else {
-//          // Bold the entire text if there's no newline
-//          spannableString.setSpan(
-//            StyleSpan(Typeface.BOLD),
-//            0,
-//            note.description.length,
-//            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-//          )
-//        }
-//
-//        binding.tvTitle.text = spannableString
-//      }
-
       binding.tvDescription.text = note.description
       binding.tvTitle.text = note.title
       binding.tvDate.text = formatTimestampCard(note.dateModified)
 
+      // Set background color based on selection state
+      val context = binding.root.context
+      binding.container.setCardBackgroundColor(
+        if (selectedItems.contains(note)) ContextCompat.getColor(context, R.color.gray_100)
+        else Color.WHITE
+      )
 
-//      // delete multiple and single
-//      val context = binding.root.context
-//      binding.container.setCardBackgroundColor(
-//        if (selectedItems.contains(note)) ContextCompat.getColor(context, R.color.gray_100)
-//        else Color.WHITE
-//      )
-//
-//      binding.container.setOnClickListener {
-//        if (selectedItems.contains(note)) {
-//          selectedItems.remove(note)
-//          onItemSelected(note, false)
-//        } else {
-//          selectedItems.add(note)
-//          onItemSelected(note, true)
-//        }
-//        notifyItemChanged(adapterPosition)
-//      }
-//
-//      binding.container.setOnLongClickListener {
-//        onItemLongClick(note)
-//        true
-//      }
-
-      // open detail note
       binding.container.setOnClickListener {
-        val intent = Intent(it.context, DetailNoteActivity::class.java)
-        intent.putExtra(DetailNoteActivity.EXTRA_NOTE, note)
-        it.context.startActivity(intent)
+        if (isSelectionMode) {
+          toggleSelection(note)
+        } else {
+          // Normal click action (e.g., open detail view)
+          val intent = Intent(it.context, DetailNoteActivity::class.java)
+          intent.putExtra(DetailNoteActivity.EXTRA_NOTE, note)
+          it.context.startActivity(intent)
+        }
       }
+
+      binding.container.setOnLongClickListener {
+        isSelectionMode = true
+        toggleSelection(note)
+        onItemLongClick(note)
+        true
+      }
+    }
+
+    private fun toggleSelection(note: Note) {
+      if (selectedItems.contains(note)) {
+        selectedItems.remove(note)
+        onItemSelected(note, false)
+      } else {
+        selectedItems.add(note)
+        onItemSelected(note, true)
+      }
+      notifyItemChanged(adapterPosition)
     }
   }
 
   fun deleteSelectedItems() {
     listNote.removeAll(selectedItems)
     selectedItems.clear()
+    isSelectionMode = false
     notifyDataSetChanged()
   }
 
@@ -144,7 +118,7 @@ class NotesAdapter(
       oldList[oldItemPosition].id == newList[newItemPosition].id
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-      (oldList[oldItemPosition].id == newList[newItemPosition].id
-        && oldList[oldItemPosition].description == newList[newItemPosition].description)
+      (oldList[oldItemPosition].id == newList[newItemPosition].id &&
+        oldList[oldItemPosition].description == newList[newItemPosition].description)
   }
 }

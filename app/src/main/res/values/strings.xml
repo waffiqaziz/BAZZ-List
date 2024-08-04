@@ -20,4 +20,5 @@
   <string name="zero_characters">  |  0 Characters</string>
   <string name="delete_selected">Delete Selected</string>
   <string name="operation_successful">Operation successful</string>
+  <string name="cancel">Cancel</string>
 </resources>

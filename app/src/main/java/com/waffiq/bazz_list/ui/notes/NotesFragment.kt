@@ -56,7 +56,6 @@ class NotesFragment : Fragment(), OnFabClickListener {
             deleteSelectedItems()
             true
           }
-
           else -> false
         }
       }
@@ -79,14 +78,13 @@ class NotesFragment : Fragment(), OnFabClickListener {
       notesAdapter.setNote(it)
     }
 
-    // observe any function
+    // Observe any function
     notesViewModel.dbResult.observe(viewLifecycleOwner) {
       it.getContentIfNotHandled().let { dbResult ->
         when (dbResult) {
           is DbResult.Success -> showToast(
             dbResult.message ?: getString(R.string.operation_successful)
           )
-
           is DbResult.Error -> showToast(dbResult.errorMessage)
           else -> {}
         }
@@ -95,7 +93,7 @@ class NotesFragment : Fragment(), OnFabClickListener {
   }
 
   private fun onItemLongClick(note: Note) {
-    notesViewModel.deleteNote(note.id)
+    // Long click action now only toggles the selection mode
   }
 
   private fun onItemSelected(note: Note, isSelected: Boolean) {
@@ -111,6 +109,9 @@ class NotesFragment : Fragment(), OnFabClickListener {
     val notesToDelete = selectedItems.toList()
     notesViewModel.deleteMultipleNotes(notesToDelete)
     notesAdapter.deleteSelectedItems()
+    selectedItems.clear()
+    isMultiSelect = false
+    updateDeleteMenuItemVisibility()
   }
 
   private fun updateDeleteMenuItemVisibility() {
