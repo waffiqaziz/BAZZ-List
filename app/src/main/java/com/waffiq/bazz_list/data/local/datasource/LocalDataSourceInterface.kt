@@ -44,14 +44,4 @@ interface LocalDataSourceInterface {
       DbResult.Error("Unknown error: ${e.message}")
     }
   }
-
-  // Define error codes
-  companion object {
-    const val SUCCESS = 0
-    const val ERROR_DUPLICATE_ENTRY = 1
-    const val ERROR_SQLITE_EXCEPTION = 2
-    const val ERROR_DATABASE_FULL = 3
-    const val ERROR_DISK_IO = 4
-    const val ERROR_UNKNOWN = 5
-  }
 }

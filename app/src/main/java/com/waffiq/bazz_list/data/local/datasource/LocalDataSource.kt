@@ -1,6 +1,5 @@
 package com.waffiq.bazz_list.data.local.datasource
 
-import android.util.Log
 import com.waffiq.bazz_list.data.local.model.NoteEntity
 import com.waffiq.bazz_list.data.local.room.NoteDao
 import com.waffiq.bazz_list.domain.model.Note

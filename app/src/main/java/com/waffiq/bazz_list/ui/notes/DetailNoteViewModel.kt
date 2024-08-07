@@ -1,10 +1,8 @@
 package com.waffiq.bazz_list.ui.notes
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.viewModelScope
 import com.waffiq.bazz_list.domain.model.Note
 import com.waffiq.bazz_list.domain.usecase.note.NotesUseCase

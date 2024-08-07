@@ -42,6 +42,16 @@ class NotesFragment : Fragment(), OnFabClickListener {
     _binding = FragmentNotesBinding.inflate(inflater, container, false)
     val root: View = binding.root
 
+    val factory = ViewModelFactory.getInstance(requireContext())
+    notesViewModel = ViewModelProvider(this, factory)[NotesViewModel::class.java]
+
+    setupOptionMenu()
+    showNotes()
+    swipeRefresh()
+    return root
+  }
+
+  private fun setupOptionMenu() {
     // Enable options menu in fragment
     requireActivity().addMenuProvider(object : MenuProvider {
       override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
@@ -58,31 +68,43 @@ class NotesFragment : Fragment(), OnFabClickListener {
             deleteSelectedItems()
             true
           }
+
           R.id.action_cancel -> {
             cancelSelectionMode()
             true
           }
+
           else -> false
         }
       }
     }, viewLifecycleOwner)
+  }
 
-    val factory = ViewModelFactory.getInstance(requireContext())
-    notesViewModel = ViewModelProvider(this, factory)[NotesViewModel::class.java]
+  private fun getNotes() {
+    notesViewModel.notes.observe(viewLifecycleOwner) {
+      notesAdapter.setNote(it)
+    }
+  }
 
-    showNotes()
-    return root
+  private fun swipeRefresh() {
+    binding.swipeRefresh.setOnRefreshListener {
+      getNotes()
+      binding.swipeRefresh.isRefreshing = false
+    }
   }
 
   private fun showNotes() {
-    notesAdapter = NotesAdapter(::onItemLongClick, ::onItemSelected, ::onNoteClick) // Pass the normal click callback
+    // setup recyclerview and adapter
+    notesAdapter = NotesAdapter(
+      ::onItemLongClick,
+      ::onItemSelected,
+      ::onNoteClick
+    ) // Pass the normal click callback
     val staggeredGridLayoutManager =
       StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
     binding.rvNotes.layoutManager = staggeredGridLayoutManager
     binding.rvNotes.adapter = notesAdapter
-    notesViewModel.notes.observe(viewLifecycleOwner) {
-      notesAdapter.setNote(it)
-    }
+    getNotes()
 
     // Observe any function
     notesViewModel.dbResult.observe(viewLifecycleOwner) {
@@ -91,6 +113,7 @@ class NotesFragment : Fragment(), OnFabClickListener {
           is DbResult.Success -> showToast(
             dbResult.message ?: getString(R.string.operation_successful)
           )
+
           is DbResult.Error -> showToast(dbResult.errorMessage)
           else -> {}
         }
@@ -108,10 +131,10 @@ class NotesFragment : Fragment(), OnFabClickListener {
     if (isSelected) selectedItems.add(note)
     else selectedItems.remove(note)
 
-    isMultiSelect = selectedItems.isNotEmpty()
     updateMenuItemsVisibility()
   }
 
+  // open detail activity
   private fun onNoteClick(note: Note) {
     val intent = Intent(requireContext(), DetailNoteActivity::class.java)
     intent.putExtra(DetailNoteActivity.EXTRA_NOTE, note)
@@ -134,15 +157,18 @@ class NotesFragment : Fragment(), OnFabClickListener {
     updateMenuItemsVisibility()
   }
 
+  // show or hide cancel and delete action
   private fun updateMenuItemsVisibility() {
     deleteMenuItem?.isVisible = isMultiSelect
     cancelMenuItem?.isVisible = isMultiSelect
+    deleteMenuItem?.isVisible = selectedItems.isNotEmpty()
   }
 
   private fun showToast(text: String) {
     Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
   }
 
+  // add note
   override fun onFabClick() {
     startActivity(
       Intent(requireContext(), DetailNoteActivity::class.java).putExtra(

@@ -35,6 +35,4 @@ class NoteRepository(
 
   override suspend fun update(id: Int, title: String, description: String, dateModified: Long): DbResult =
     localDataSource.updateNote(id, title, description, dateModified)
-
-
 }

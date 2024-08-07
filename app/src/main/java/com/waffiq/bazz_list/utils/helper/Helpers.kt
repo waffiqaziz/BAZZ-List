@@ -1,3 +1,5 @@
+@file:Suppress("unused", "unused", "unused")
+
 package com.waffiq.bazz_list.utils.helper
 
 import java.text.SimpleDateFormat
@@ -26,7 +28,7 @@ object Helpers {
         sdfTime.format(date)
       }
 
-      isYesterday(currentDate, timestampCalendar) -> {
+      isYesterday(timestampCalendar) -> {
         "Yesterday ${sdfTime.format(date)}"
       }
 
@@ -49,7 +51,7 @@ object Helpers {
       currentDate.get(Calendar.DAY_OF_YEAR) == timestampCalendar.get(Calendar.DAY_OF_YEAR)
   }
 
-  private fun isYesterday(currentDate: Calendar, timestampCalendar: Calendar): Boolean {
+  private fun isYesterday(timestampCalendar: Calendar): Boolean {
     val yesterday = Calendar.getInstance()
     yesterday.add(Calendar.DAY_OF_YEAR, -1)
     return yesterday.get(Calendar.YEAR) == timestampCalendar.get(Calendar.YEAR) &&

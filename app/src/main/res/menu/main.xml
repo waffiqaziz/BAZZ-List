@@ -5,7 +5,8 @@
 
   <item
     android:id="@+id/action_delete"
-    android:icon="@android:drawable/ic_menu_delete"
+    android:background="?attr/actionBarItemBackground"
+    android:icon="@drawable/ic_trash"
     android:title="@string/delete_selected"
     android:visible="false"
     app:showAsAction="ifRoom"
@@ -13,9 +14,10 @@
 
   <item
     android:id="@+id/action_cancel"
-    android:icon="@android:drawable/ic_menu_close_clear_cancel"
+    android:background="?attr/actionBarItemBackground"
+    android:icon="@drawable/ic_cross"
     android:title="@string/cancel"
-    app:showAsAction="ifRoom"
     android:visible="false"
+    app:showAsAction="ifRoom"
     tools:visible="true" />
 </menu>

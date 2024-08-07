@@ -1,7 +1,7 @@
 package com.waffiq.bazz_list.ui.adapter
 
-import android.content.Intent
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
@@ -11,13 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.waffiq.bazz_list.R
 import com.waffiq.bazz_list.databinding.ItemGridBinding
 import com.waffiq.bazz_list.domain.model.Note
-import com.waffiq.bazz_list.ui.notes.DetailNoteActivity
 import com.waffiq.bazz_list.utils.helper.Helpers.formatTimestampCard
 
 class NotesAdapter(
-  private val onItemLongClick: (Note) -> Unit,
+  private val onItemLongClick: (Note) -> Unit, // callback for long press
   private val onItemSelected: (Note, Boolean) -> Unit,
-  private val onNoteClick: (Note) -> Unit // Add this callback for normal click handling
+  private val onNoteClick: (Note) -> Unit // callback for normal click handling
 ) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
   private val listNote = ArrayList<Note>()
   private val selectedItems = mutableSetOf<Note>()
@@ -55,24 +54,27 @@ class NotesAdapter(
     lateinit var data: Note
 
     fun bind(note: Note) {
+      val context = binding.root.context
       data = note
 
-      binding.tvDescription.text = note.description
-      binding.tvTitle.text = note.title
+      binding.tvDescription.text =
+        note.description.ifEmpty { ContextCompat.getString(context, R.string.no_description) }
+      binding.tvTitle.text =
+        note.title.ifEmpty { ContextCompat.getString(context, R.string.no_title) }
       binding.tvDate.text = formatTimestampCard(note.dateModified)
 
-      val context = binding.root.context
+
+      // handle change background color
       binding.container.setCardBackgroundColor(
         if (selectedItems.contains(note)) ContextCompat.getColor(context, R.color.gray_100)
         else Color.WHITE
       )
 
+      // open detail page or selected item
       binding.container.setOnClickListener {
-        if (isSelectionMode) {
-          toggleSelection(note)
-        } else {
-          onNoteClick(note) // Call the normal click callback
-        }
+        if (isSelectionMode) toggleSelection(note)
+        else onNoteClick(note) // Call the normal click callback
+        Log.e("TESTTTT" , adapterPosition.toString())
       }
 
       binding.container.setOnLongClickListener {
@@ -98,16 +100,32 @@ class NotesAdapter(
   }
 
   fun clearSelection() {
+    val previousSelectedItems = selectedItems.toList()
     selectedItems.clear()
     isSelectionMode = false
-    notifyDataSetChanged()
+    
+    // update item based on index
+    previousSelectedItems.forEach { note ->
+      val index = listNote.indexOf(note)
+      if (index != -1) {
+        notifyItemChanged(index)
+      }
+    }
   }
 
   fun deleteSelectedItems() {
-    listNote.removeAll(selectedItems)
+    val itemsToDelete = selectedItems.toList()
     selectedItems.clear()
     isSelectionMode = false
-    notifyDataSetChanged()
+
+    itemsToDelete.forEach { note ->
+      val index = listNote.indexOf(note)
+      if (index != -1) {
+        listNote.removeAt(index)
+        notifyItemRemoved(index)
+        notifyItemRangeChanged(index, listNote.size) // Notify range change to handle the shifting items
+      }
+    }
   }
 
   inner class DiffCallback(
@@ -125,5 +143,6 @@ class NotesAdapter(
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
       oldList[oldItemPosition].id == newList[newItemPosition].id
         && oldList[oldItemPosition].description == newList[newItemPosition].description
+        && oldList[oldItemPosition].title == newList[newItemPosition].title
   }
 }
