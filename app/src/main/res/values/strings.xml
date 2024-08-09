@@ -15,6 +15,7 @@
   <string name="characters">"|  %1$s Characters"</string>
   <string name="character">"|  %1$s Character"</string>
   <string name="zero_characters">  |  0 Characters</string>
+  <string name="add_bullets">Add bullets</string>
   <string name="start_typing">Start typing</string>
 
   <!-- note card -->

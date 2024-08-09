@@ -17,9 +17,10 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.waffiq.bazz_list.R
 import com.waffiq.bazz_list.databinding.ActivityMainBinding
+import com.waffiq.bazz_list.utils.helper.FabController
 import com.waffiq.bazz_list.utils.helper.OnFabClickListener
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FabController {
 
   private lateinit var appBarConfiguration: AppBarConfiguration
   private lateinit var binding: ActivityMainBinding
@@ -106,5 +107,13 @@ class MainActivity : AppCompatActivity() {
   override fun onSupportNavigateUp(): Boolean {
     val navController = findNavController(R.id.nav_host_fragment_content_main)
     return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+  }
+
+  override fun showFab() {
+    binding.appBarMain.fab.show()
+  }
+
+  override fun hideFab() {
+    binding.appBarMain.fab.hide()
   }
 }

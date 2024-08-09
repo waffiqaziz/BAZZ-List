@@ -1,5 +1,6 @@
 package com.waffiq.bazz_list.ui.notes
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,6 +20,7 @@ import com.waffiq.bazz_list.domain.model.Note
 import com.waffiq.bazz_list.ui.adapter.NotesAdapter
 import com.waffiq.bazz_list.ui.viewmodelfactory.ViewModelFactory
 import com.waffiq.bazz_list.utils.helper.DbResult
+import com.waffiq.bazz_list.utils.helper.FabController
 import com.waffiq.bazz_list.utils.helper.OnFabClickListener
 
 class NotesFragment : Fragment(), OnFabClickListener {
@@ -33,6 +35,17 @@ class NotesFragment : Fragment(), OnFabClickListener {
   private var isMultiSelect = false
   private var deleteMenuItem: MenuItem? = null
   private var cancelMenuItem: MenuItem? = null
+
+  private var fabController: FabController? = null
+
+  override fun onAttach(context: Context) {
+    super.onAttach(context)
+    if (context is FabController) {
+      fabController = context
+    } else {
+      throw RuntimeException("$context must implement FabController")
+    }
+  }
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -99,7 +112,7 @@ class NotesFragment : Fragment(), OnFabClickListener {
       ::onItemLongClick,
       ::onItemSelected,
       ::onNoteClick
-    ) // Pass the normal click callback
+    )
     val staggeredGridLayoutManager =
       StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
     binding.rvNotes.layoutManager = staggeredGridLayoutManager
@@ -157,11 +170,14 @@ class NotesFragment : Fragment(), OnFabClickListener {
     updateMenuItemsVisibility()
   }
 
-  // show or hide cancel and delete action
+  // show or hide cancel, delete action and FAB
   private fun updateMenuItemsVisibility() {
     deleteMenuItem?.isVisible = isMultiSelect
     cancelMenuItem?.isVisible = isMultiSelect
     deleteMenuItem?.isVisible = selectedItems.isNotEmpty()
+
+    if (isMultiSelect) fabController?.hideFab()
+    else fabController?.showFab()
   }
 
   private fun showToast(text: String) {

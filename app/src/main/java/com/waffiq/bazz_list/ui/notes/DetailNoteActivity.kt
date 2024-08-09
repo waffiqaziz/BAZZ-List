@@ -4,9 +4,13 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.KeyEvent
+import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.waffiq.bazz_list.R
 import com.waffiq.bazz_list.databinding.ActivityDetailNoteBinding
@@ -25,7 +29,10 @@ class DetailNoteActivity : AppCompatActivity() {
   private lateinit var detailNoteViewModel: DetailNoteViewModel
 
   private lateinit var dataExtra: Note
-  private var isUpdate = false // flag helper
+
+  // flag helper
+  private var isUpdate = false
+  private var isBulletMode = false
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -48,9 +55,14 @@ class DetailNoteActivity : AppCompatActivity() {
         }
       })
 
+
+    window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+    window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+
     getDataExtra()
     showData()
     getTotalCharacters()
+    editTextListener()
   }
 
   private fun getDataExtra() {
@@ -109,7 +121,7 @@ class DetailNoteActivity : AppCompatActivity() {
 
     // get total character when before typing
     binding.etDescription.addTextChangedListener(object : TextWatcher {
-      override fun beforeTextChanged(s: CharSequence?, star: Int, count: Int, after: Int) {      }
+      override fun beforeTextChanged(s: CharSequence?, star: Int, count: Int, after: Int) {}
       override fun onTextChanged(s: CharSequence?, star: Int, count: Int, after: Int) {
         binding.tvTotalCharacters.text = getString(
           if (getTotalChar(s) == 1) R.string.character
@@ -126,8 +138,65 @@ class DetailNoteActivity : AppCompatActivity() {
     return s?.toString()?.trim()?.replace(" ", "")?.replace("\n", "")?.length
   }
 
-  private fun getTotalChar(s: String?): Int? {
-    return s?.trim()?.replace(" ", "")?.replace("\n", "")?.length
+  private fun editTextListener() {
+    binding.btnBullet.setOnClickListener {
+      isBulletMode = !isBulletMode
+      binding.btnBullet.isActivated = !binding.btnBullet.isActivated
+
+      if (binding.btnBullet.isActivated) {
+        binding.btnBullet.background =
+          ContextCompat.getDrawable(this, R.drawable.button_background_pressed)
+      } else {
+        binding.btnBullet.background =
+          ContextCompat.getDrawable(this, R.drawable.button_background_pressed)
+      }
+    }
+
+    binding.etDescription.setOnFocusChangeListener { _, hasFocus ->
+      if (hasFocus) binding.customToolbar.visibility = View.VISIBLE
+      else binding.customToolbar.visibility = View.GONE
+    }
+
+    // Add bullet when bullet button is clicked
+    binding.etDescription.addTextChangedListener(object : TextWatcher {
+      override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+      override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+      override fun afterTextChanged(editable: Editable?) {
+        if (isBulletMode) {
+          val selectionStart = binding.etDescription.selectionStart
+          val selectionEnd = binding.etDescription.selectionEnd
+
+          if (selectionStart == selectionEnd) {
+            // Check if the user pressed Enter key
+            if (editable?.endsWith("\n") == true) {
+              // new line character and add a bullet
+              editable.replace(selectionStart - 1, selectionEnd, "\n ")
+              addBulletToDescription()
+            }
+          }
+        }
+      }
+    })
+  }
+
+  private fun addBulletToDescription() {
+    val bullet = "\u2022 "  // Unicode for bullet
+    val start = binding.etDescription.selectionStart
+    val end = binding.etDescription.selectionEnd
+
+    if (start == end) {
+      // Insert bullet at the current cursor position
+      binding.etDescription.text.insert(start, "$bullet ")
+    } else {
+      // Replace the selected text with bullet
+      binding.etDescription.text
+        .replace(start, end, "$bullet ${binding.etDescription.text.substring(start, end)}")
+    }
+
+    // Move cursor to the end of the inserted bullet
+    binding.etDescription.setSelection(start + bullet.length + 1)
   }
 
   private fun insertNote() {

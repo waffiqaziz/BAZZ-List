@@ -1,7 +1,6 @@
 package com.waffiq.bazz_list.ui.adapter
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
@@ -74,7 +73,6 @@ class NotesAdapter(
       binding.container.setOnClickListener {
         if (isSelectionMode) toggleSelection(note)
         else onNoteClick(note) // Call the normal click callback
-        Log.e("TESTTTT" , adapterPosition.toString())
       }
 
       binding.container.setOnLongClickListener {
@@ -103,7 +101,7 @@ class NotesAdapter(
     val previousSelectedItems = selectedItems.toList()
     selectedItems.clear()
     isSelectionMode = false
-    
+
     // update item based on index
     previousSelectedItems.forEach { note ->
       val index = listNote.indexOf(note)
@@ -123,7 +121,10 @@ class NotesAdapter(
       if (index != -1) {
         listNote.removeAt(index)
         notifyItemRemoved(index)
-        notifyItemRangeChanged(index, listNote.size) // Notify range change to handle the shifting items
+        notifyItemRangeChanged(
+          index,
+          listNote.size
+        ) // Notify range change to handle the shifting items
       }
     }
   }

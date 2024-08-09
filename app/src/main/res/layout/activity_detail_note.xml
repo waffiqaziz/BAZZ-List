@@ -24,10 +24,11 @@
 
   </com.google.android.material.appbar.AppBarLayout>
 
-  <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/constraint_layout"
+  <LinearLayout
+    android:id="@+id/container_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <EditText
@@ -41,47 +42,128 @@
       android:inputType="text"
       android:minHeight="48dp"
       android:paddingHorizontal="20dp"
-      android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall" />
 
-    <TextView
-      android:id="@+id/tv_date_now"
-      android:layout_width="wrap_content"
+    <LinearLayout
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:paddingStart="20dp"
-      android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/et_title"
-      tools:text="Saturday, August 3 14:38"
-      tools:ignore="RtlSymmetry" />
+      android:orientation="horizontal">
 
-    <TextView
-      android:id="@+id/tv_total_characters"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="5dp"
-      android:text="@string/zero_characters"
-      android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-      app:layout_constraintStart_toEndOf="@+id/tv_date_now"
-      app:layout_constraintTop_toBottomOf="@+id/et_title"
-      tools:text=" |  5 Characters" />
+      <TextView
+        android:id="@+id/tv_date_now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+        tools:ignore="RtlSymmetry"
+        tools:text="Saturday, August 3 14:38" />
+
+      <TextView
+        android:id="@+id/tv_total_characters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="@string/zero_characters"
+        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+        tools:text=" |  5 Characters" />
+
+    </LinearLayout>
 
     <EditText
       android:id="@+id/et_description"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="0dp"
       android:layout_marginTop="8dp"
+      android:layout_weight="1"
       android:autofillHints="Description"
-      android:background="@null"
+      android:gravity="top"
       android:hint="@string/start_typing"
-      android:inputType="text"
+      android:inputType="textCapSentences|textMultiLine"
+      android:maxLength="5000"
       android:minHeight="48dp"
       android:paddingHorizontal="20dp"
-      android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-      app:layout_constraintTop_toBottomOf="@+id/tv_date_now" />
+      android:scrollbars="vertical"
+      android:scrollHorizontally="true"
+      android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+  </LinearLayout>
 
+  <HorizontalScrollView
+    android:id="@+id/custom_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|center_vertical"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:visibility="gone"
+    tools:visibility="visible">
 
+    <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+
+      <Button
+        android:id="@+id/btn_bullet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bullet" />
+
+      <Button
+        android:id="@+id/btn_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Checkbox" />
+
+      <Button
+        android:id="@+id/btn_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bold" />
+
+      <Button
+        android:id="@+id/btn_italic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Italic" />
+
+      <Button
+        android:id="@+id/btn_underline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Underline" />
+
+      <Button
+        android:id="@+id/btn_highlighter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Highlighter" />
+
+      <!-- Add more buttons as needed -->
+
+    </LinearLayout>
+  </HorizontalScrollView>
+
+  <!--  <LinearLayout-->
+  <!--    android:id="@+id/custom_toolbar"-->
+  <!--    android:layout_width="match_parent"-->
+  <!--    android:layout_height="wrap_content"-->
+  <!--    android:layout_alignParentBottom="true"-->
+  <!--    android:layout_gravity="bottom|center_vertical"-->
+  <!--    android:background="@color/gray_100"-->
+  <!--    android:gravity="center"-->
+  <!--    android:orientation="horizontal"-->
+  <!--    android:padding="8dp"-->
+  <!--    android:visibility="gone"-->
+  <!--    tools:visibility="visible">-->
+
+  <!--    <ImageButton-->
+  <!--      android:id="@+id/btn_bullet"-->
+  <!--      android:layout_width="wrap_content"-->
+  <!--      android:layout_height="wrap_content"-->
+  <!--      android:contentDescription="@string/add_bullets"-->
+  <!--      android:padding="5dp"-->
+  <!--      android:src="@drawable/ic_bullet_list" />-->
+  <!--  </LinearLayout>-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
