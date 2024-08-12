@@ -1,10 +1,12 @@
 package com.waffiq.bazz_list.ui.adapter
 
 import android.graphics.Color
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.waffiq.bazz_list.R
@@ -57,7 +59,8 @@ class NotesAdapter(
       data = note
 
       binding.tvDescription.text =
-        note.description.ifEmpty { ContextCompat.getString(context, R.string.no_description) }
+        HtmlCompat.fromHtml(note.description, HtmlCompat.FROM_HTML_MODE_LEGACY)
+          .ifEmpty { ContextCompat.getString(context, R.string.no_description) }
       binding.tvTitle.text =
         note.title.ifEmpty { ContextCompat.getString(context, R.string.no_title) }
       binding.tvDate.text = formatTimestampCard(note.dateModified)

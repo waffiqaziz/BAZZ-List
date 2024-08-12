@@ -69,22 +69,18 @@
 
     </LinearLayout>
 
-    <EditText
+    <jp.wasabeef.richeditor.RichEditor
       android:id="@+id/et_description"
       android:layout_width="match_parent"
-      android:layout_height="0dp"
+      android:layout_height="wrap_content"
       android:layout_marginTop="8dp"
-      android:layout_weight="1"
       android:autofillHints="Description"
       android:gravity="top"
       android:hint="@string/start_typing"
-      android:inputType="textCapSentences|textMultiLine"
-      android:maxLength="5000"
-      android:minHeight="48dp"
-      android:paddingHorizontal="20dp"
+      android:layout_marginHorizontal="20dp"
       android:scrollbars="vertical"
       android:scrollHorizontally="true"
-      android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
+      android:textAppearance="@style/TextAppearance.Material3.DisplayLarge" />
 
   </LinearLayout>
 
@@ -95,75 +91,158 @@
     android:layout_gravity="bottom|center_vertical"
     android:gravity="center"
     android:orientation="horizontal"
+    android:background="@color/gray_100"
     android:padding="8dp"
-    android:visibility="gone"
     tools:visibility="visible">
 
     <LinearLayout
+      android:orientation="horizontal"
       android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal">
+      android:layout_height="wrap_content">
 
-      <Button
-        android:id="@+id/btn_bullet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bullet" />
+      <ImageButton
+        android:id="@+id/action_undo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_undo" />
 
-      <Button
-        android:id="@+id/btn_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Checkbox" />
+      <ImageButton
+        android:id="@+id/action_redo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_redo" />
 
-      <Button
-        android:id="@+id/btn_bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bold" />
+      <ImageButton
+        android:id="@+id/action_bold"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_bold" />
 
-      <Button
-        android:id="@+id/btn_italic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Italic" />
+      <ImageButton
+        android:id="@+id/action_italic"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_italic" />
 
-      <Button
-        android:id="@+id/btn_underline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Underline" />
+      <ImageButton
+        android:id="@+id/action_subscript"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_subscript" />
 
-      <Button
-        android:id="@+id/btn_highlighter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Highlighter" />
+      <ImageButton
+        android:id="@+id/action_superscript"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_superscript" />
 
-      <!-- Add more buttons as needed -->
+      <ImageButton
+        android:id="@+id/action_strikethrough"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_strikethrough" />
 
+      <ImageButton
+        android:id="@+id/action_underline"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_underline" />
+
+      <ImageButton
+        android:id="@+id/action_heading1"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_h1" />
+
+      <ImageButton
+        android:id="@+id/action_heading2"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_h2" />
+
+      <ImageButton
+        android:id="@+id/action_heading3"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_h3" />
+
+      <ImageButton
+        android:id="@+id/action_align_left"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_text_left_alignment" />
+
+      <ImageButton
+        android:id="@+id/action_align_center"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_text_center_alignment" />
+
+      <ImageButton
+        android:id="@+id/action_align_right"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_text_right_alignment" />
+
+      <ImageButton
+        android:id="@+id/action_insert_bullets"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_bullet_list" />
+
+      <ImageButton
+        android:id="@+id/action_insert_numbers"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_numbering" />
+
+      <ImageButton
+        android:id="@+id/action_insert_link"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_link" />
+
+      <ImageButton
+        android:id="@+id/action_insert_checkbox"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="@null"
+        android:contentDescription="@null"
+        android:src="@android:drawable/checkbox_on_background" />
     </LinearLayout>
   </HorizontalScrollView>
-
-  <!--  <LinearLayout-->
-  <!--    android:id="@+id/custom_toolbar"-->
-  <!--    android:layout_width="match_parent"-->
-  <!--    android:layout_height="wrap_content"-->
-  <!--    android:layout_alignParentBottom="true"-->
-  <!--    android:layout_gravity="bottom|center_vertical"-->
-  <!--    android:background="@color/gray_100"-->
-  <!--    android:gravity="center"-->
-  <!--    android:orientation="horizontal"-->
-  <!--    android:padding="8dp"-->
-  <!--    android:visibility="gone"-->
-  <!--    tools:visibility="visible">-->
-
-  <!--    <ImageButton-->
-  <!--      android:id="@+id/btn_bullet"-->
-  <!--      android:layout_width="wrap_content"-->
-  <!--      android:layout_height="wrap_content"-->
-  <!--      android:contentDescription="@string/add_bullets"-->
-  <!--      android:padding="5dp"-->
-  <!--      android:src="@drawable/ic_bullet_list" />-->
-  <!--  </LinearLayout>-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

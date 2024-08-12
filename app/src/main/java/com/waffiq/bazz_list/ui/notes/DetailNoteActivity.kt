@@ -2,15 +2,10 @@ package com.waffiq.bazz_list.ui.notes
 
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.KeyEvent
-import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.waffiq.bazz_list.R
 import com.waffiq.bazz_list.databinding.ActivityDetailNoteBinding
@@ -25,14 +20,13 @@ import java.util.Date
 class DetailNoteActivity : AppCompatActivity() {
 
   private lateinit var binding: ActivityDetailNoteBinding
-
   private lateinit var detailNoteViewModel: DetailNoteViewModel
 
   private lateinit var dataExtra: Note
+  private lateinit var desc: String
 
   // flag helper
   private var isUpdate = false
-  private var isBulletMode = false
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -60,9 +54,10 @@ class DetailNoteActivity : AppCompatActivity() {
     window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
 
     getDataExtra()
+    setupRichText()
     showData()
     getTotalCharacters()
-    editTextListener()
+    setupToolbarRichText()
   }
 
   private fun getDataExtra() {
@@ -86,7 +81,7 @@ class DetailNoteActivity : AppCompatActivity() {
     } else {
       isUpdate = true
       binding.tvDateNow.text = formatTimestamp(dataExtra.dateModified)
-      binding.etDescription.setText(dataExtra.description)
+      binding.etDescription.html = dataExtra.description
       binding.etTitle.setText(dataExtra.title)
     }
 
@@ -113,110 +108,80 @@ class DetailNoteActivity : AppCompatActivity() {
 
   private fun getTotalCharacters() {
     // get total character before typing
-    binding.tvTotalCharacters.text = getString(
-      if (getTotalChar(binding.etDescription.text) == 1) R.string.character
-      else R.string.characters,
-      getTotalChar(binding.etDescription.text).toString()
-    )
-
-    // get total character when before typing
-    binding.etDescription.addTextChangedListener(object : TextWatcher {
-      override fun beforeTextChanged(s: CharSequence?, star: Int, count: Int, after: Int) {}
-      override fun onTextChanged(s: CharSequence?, star: Int, count: Int, after: Int) {
+    binding.etDescription.setOnTextChangeListener { _ ->
+      binding.etDescription.setOnJSDataListener {
+        desc = it
         binding.tvTotalCharacters.text = getString(
-          if (getTotalChar(s) == 1) R.string.character
+          if (getTotalChar(it) == 1) R.string.character
           else R.string.characters,
-          getTotalChar(s).toString()
+          getTotalChar(it).toString()
         )
       }
-
-      override fun afterTextChanged(p0: Editable?) {}
-    })
+      binding.etDescription.html
+    }
   }
 
-  private fun getTotalChar(s: CharSequence?): Int? {
-    return s?.toString()?.trim()?.replace(" ", "")?.replace("\n", "")?.length
+  private fun getTotalChar(s: String?): Int? {
+    return s?.trim()?.replace(" ", "")?.replace("\n", "")?.length
   }
 
-  private fun editTextListener() {
-    binding.btnBullet.setOnClickListener {
-      isBulletMode = !isBulletMode
-      binding.btnBullet.isActivated = !binding.btnBullet.isActivated
+  private fun setupRichText() {
+    binding.etDescription.LoadFont("Nunito Sans Regular", "font/nunito_sans_regular.ttf")
+  }
 
-      if (binding.btnBullet.isActivated) {
-        binding.btnBullet.background =
-          ContextCompat.getDrawable(this, R.drawable.button_background_pressed)
-      } else {
-        binding.btnBullet.background =
-          ContextCompat.getDrawable(this, R.drawable.button_background_pressed)
-      }
-    }
-
-    binding.etDescription.setOnFocusChangeListener { _, hasFocus ->
-      if (hasFocus) binding.customToolbar.visibility = View.VISIBLE
-      else binding.customToolbar.visibility = View.GONE
-    }
-
-    // Add bullet when bullet button is clicked
-    binding.etDescription.addTextChangedListener(object : TextWatcher {
-      override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-      override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-
-      override fun afterTextChanged(editable: Editable?) {
-        if (isBulletMode) {
-          val selectionStart = binding.etDescription.selectionStart
-          val selectionEnd = binding.etDescription.selectionEnd
-
-          if (selectionStart == selectionEnd) {
-            // Check if the user pressed Enter key
-            if (editable?.endsWith("\n") == true) {
-              // new line character and add a bullet
-              editable.replace(selectionStart - 1, selectionEnd, "\n ")
-              addBulletToDescription()
-            }
-          }
+  private fun setupToolbarRichText() {
+    binding.apply {
+      etDescription.apply {
+        actionUndo.setOnClickListener { undo() }
+        actionRedo.setOnClickListener { redo() }
+        actionBold.setOnClickListener { toggleBold() }
+        actionItalic.setOnClickListener { toggleItalic() }
+        actionStrikethrough.setOnClickListener { toggleStrikeThrough() }
+        actionUnderline.setOnClickListener { toggleUnderline() }
+        actionHeading1.setOnClickListener { setHeading(1) }
+        actionHeading2.setOnClickListener { setHeading(2) }
+        actionHeading3.setOnClickListener { setHeading(3) }
+        actionAlignLeft.setOnClickListener { setAlignLeft() }
+        actionAlignCenter.setOnClickListener { setAlignCenter() }
+        actionAlignRight.setOnClickListener { setAlignRight() }
+        actionInsertBullets.setOnClickListener { setBullets() }
+        actionInsertNumbers.setOnClickListener { setNumbers() }
+        actionInsertCheckbox.setOnClickListener { insertCheckbox() }
+        actionInsertLink.setOnClickListener {
+          insertLink(
+            "https://github.com/wasabeef",
+            "https://github.com/wasabeef",
+            "wasabeef"
+          )
         }
       }
-    })
-  }
 
-  private fun addBulletToDescription() {
-    val bullet = "\u2022 "  // Unicode for bullet
-    val start = binding.etDescription.selectionStart
-    val end = binding.etDescription.selectionEnd
-
-    if (start == end) {
-      // Insert bullet at the current cursor position
-      binding.etDescription.text.insert(start, "$bullet ")
-    } else {
-      // Replace the selected text with bullet
-      binding.etDescription.text
-        .replace(start, end, "$bullet ${binding.etDescription.text.substring(start, end)}")
+//      findViewById<View>(R.id.action_subscript).setOnClickListener { mEditor.setSubscript() }
+//      findViewById<View>(R.id.action_superscript).setOnClickListener { mEditor.setSuperscript() }
     }
-
-    // Move cursor to the end of the inserted bullet
-    binding.etDescription.setSelection(start + bullet.length + 1)
   }
 
   private fun insertNote() {
-    if ((binding.etTitle.text.isNotEmpty() || binding.etDescription.text.isNotEmpty())
-      && (binding.etTitle.text.isNotBlank() || binding.etDescription.text.isNotBlank())
+    // insert when title or description is filled
+    if ((binding.etTitle.text.isNotEmpty() || binding.etTitle.text.isNotBlank())
+      && (binding.etDescription.html?.isNotEmpty() == true || binding.etDescription.html?.isNotBlank() == true)
       && !isUpdate
     ) {
+      // add note
       val note = Note(
         id = 0,
         title = binding.etTitle.text.toString(),
-        description = binding.etDescription.text.toString(),
+        description = desc,
         dateModified = System.currentTimeMillis(),
         hide = false,
       )
       detailNoteViewModel.insertNote(note)
     } else if (isUpdate) {
+      // update
       val note = Note(
         id = dataExtra.id,
         title = binding.etTitle.text.toString(),
-        description = binding.etDescription.text.toString(),
+        description = desc,
         dateModified = System.currentTimeMillis(),
         hide = false,
       )

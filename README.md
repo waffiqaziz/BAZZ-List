@@ -42,9 +42,10 @@ To run BAZZ List on your local machine, follow these steps:
 
 ## Dependencies
 - Kotlin
-- Android Jetpack (Room, Navigation Component)
+- Android Jetpack Library (Room, Navigation Component)
 - RecyclerView
 - CardView
+- [RichEditor](https://github.com/niendo1/richeditor-android)
 
 ## Contributing
 If you want to contribute to the development of BAZZ List, please follow these steps:

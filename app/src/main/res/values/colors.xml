@@ -2,9 +2,12 @@
 <resources>
   <color name="teal_200">#FF03DAC5</color>
   <color name="teal_700">#FF018786</color>
+  
+  <color name="yellow">#FFD130</color>
   <color name="black">#FF000000</color>
   <color name="white">#FFFFFFFF</color>
-  <color name="light_gray">#FFF7EB</color>
+
+  <!-- gray -->
   <color name="gray">#161619</color>
   <color name="gray_900">#252629</color>
   <color name="gray_800">#48484C</color>
@@ -13,7 +16,24 @@
   <color name="gray_300">#C1C2C7</color>
   <color name="gray_200">#D3D4D9</color>
   <color name="gray_100">#E6E6E6</color>
-  <color name="yellow">#FFD130</color>
+  <color name="light_gray">#FFF7EB</color>
 
-  <color name="textColorPrimary">#333333</color>
+  <color name="undo">#8BC94D</color>
+  <color name="redo">#FFC44D</color>
+
+  <!-- text decoration -->
+  <color name="bold">#164863</color>
+  <color name="italic">#427D9D</color>
+  <color name="underline">#9BBEC8</color>
+
+  <color name="sage">#76885B</color>
+
+  <color name="subscript">#F6416C</color>
+  <color name="superscript">#FFDE7D</color>
+  <color name="strikethrough">#00B8A9</color>
+
+  <!-- header color -->
+  <color name="h1">#C63D2F</color>
+  <color name="h2">#E25E3E</color>
+  <color name="h3">#FF9B50</color>
 </resources>

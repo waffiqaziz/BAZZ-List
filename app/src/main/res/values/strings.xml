@@ -19,8 +19,8 @@
   <string name="start_typing">Start typing</string>
 
   <!-- note card -->
-  <string name="no_title">No title</string>
-  <string name="no_description">No description</string>
+  <string name="no_title"><i>No title</i></string>
+  <string name="no_description"><i>No description</i></string>
 
   <!-- notes page -->
   <string name="delete_selected">Delete Selected</string>
