@@ -1,7 +1,6 @@
 package com.waffiq.bazz_list.ui.adapter
 
 import android.graphics.Color
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils

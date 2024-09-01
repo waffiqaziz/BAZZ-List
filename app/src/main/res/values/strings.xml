@@ -1,12 +1,9 @@
 <resources>
   <string name="app_name_release">BAZZ List</string>
   <string name="app_name_debug">BAZZ List Debug</string>
-  <string name="navigation_drawer_open">Open navigation drawer</string>
-  <string name="navigation_drawer_close">Close navigation drawer</string>
   <string name="nav_header_title">Android Studio</string>
   <string name="nav_header_subtitle">android.studio@android.com</string>
   <string name="nav_header_desc">Navigation header</string>
-  <string name="action_settings">Settings</string>
 
   <!-- detail note page -->
   <string name="add_list">Add list</string>
@@ -15,7 +12,6 @@
   <string name="characters">"|  %1$s Characters"</string>
   <string name="character">"|  %1$s Character"</string>
   <string name="zero_characters">  |  0 Characters</string>
-  <string name="add_bullets">Add bullets</string>
   <string name="start_typing">Start typing</string>
 
   <!-- note card -->

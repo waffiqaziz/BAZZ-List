@@ -1,5 +1,12 @@
 pluginManagement {
   repositories {
+    maven {
+      setUrl("https://a8c-libs.s3.amazonaws.com/android")
+      content {
+        includeGroup("org.wordpress")
+        includeGroup("org.wordpress.aztec")
+      }
+    }
     google()
     mavenCentral()
     gradlePluginPortal()
@@ -12,6 +19,7 @@ dependencyResolutionManagement {
     google()
     mavenCentral()
     maven { setUrl("https://jitpack.io") }
+    maven { setUrl("https://a8c-libs.s3.amazonaws.com/android") }
   }
 }
 

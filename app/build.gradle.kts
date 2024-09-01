@@ -82,7 +82,7 @@ dependencies {
   implementation("androidx.legacy:legacy-support-v4:1.0.0")
   ksp("androidx.room:room-compiler:2.6.1")
 
-  // RichEditor
-  implementation("com.github.niendo1:richeditor-android:3.0.2")
-
+  // Aztec
+  implementation("org.wordpress:utils:3.5.0")
+  api("org.wordpress:aztec:v2.1.4")
 }

@@ -19,3 +19,15 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+## Third-Party Licenses
+
+This project includes third-party components that are licensed under different terms:
+
+### AztecEditor Library
+
+The `AztecEditor` library is licensed under the Mozilla Public License 2.0 (MPL 2.0).
+The full text of the MPL 2.0 license can be found in the `LICENSES/MPL-2.0.txt` file
+or at [http://mozilla.org/MPL/2.0/](http://mozilla.org/MPL/2.0/).

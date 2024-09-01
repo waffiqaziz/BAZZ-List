@@ -1,3 +1,4 @@
 <resources>
   <dimen name="fab_margin">200dp</dimen>
+  <bool name="is_large_tablet_landscape">true</bool>
 </resources>

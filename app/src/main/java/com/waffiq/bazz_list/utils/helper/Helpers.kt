@@ -1,5 +1,3 @@
-@file:Suppress("unused", "unused", "unused")
-
 package com.waffiq.bazz_list.utils.helper
 
 import java.text.SimpleDateFormat
@@ -65,5 +63,9 @@ object Helpers {
 
   private fun isSameYear(currentDate: Calendar, timestampCalendar: Calendar): Boolean {
     return currentDate.get(Calendar.YEAR) == timestampCalendar.get(Calendar.YEAR)
+  }
+
+  fun dateNow(): String {
+    return SimpleDateFormat("EEEE, MMMM dd yyyy  |  HH:mm ", Locale.getDefault()).format(Date())
   }
 }

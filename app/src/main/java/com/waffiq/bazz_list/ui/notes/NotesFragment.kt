@@ -113,9 +113,8 @@ class NotesFragment : Fragment(), OnFabClickListener {
       ::onItemSelected,
       ::onNoteClick
     )
-    val staggeredGridLayoutManager =
+    binding.rvNotes.layoutManager =
       StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-    binding.rvNotes.layoutManager = staggeredGridLayoutManager
     binding.rvNotes.adapter = notesAdapter
     getNotes()
 
