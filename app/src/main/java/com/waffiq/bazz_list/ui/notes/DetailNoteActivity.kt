@@ -17,11 +17,9 @@ import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
-import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.waffiq.bazz_list.R
@@ -44,13 +42,9 @@ import org.wordpress.aztec.toolbar.IAztecToolbarClickListener
 import org.wordpress.aztec.util.AztecLog
 import org.xml.sax.Attributes
 
-
 class DetailNoteActivity : AppCompatActivity(),
-  AztecText.OnImeBackListener,
   IAztecToolbarClickListener,
   IHistoryListener,
-  ActivityCompat.OnRequestPermissionsResultCallback,
-  PopupMenu.OnMenuItemClickListener,
   View.OnTouchListener {
 
   private lateinit var binding: ActivityDetailNoteBinding
@@ -80,19 +74,19 @@ class DetailNoteActivity : AppCompatActivity(),
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
     supportActionBar?.setDisplayShowHomeEnabled(true)
 
-//    onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-//      override fun handleOnBackPressed() {
-//        mIsKeyboardOpen = false
-//        showActionBarIfNeeded()
-//
-//        // Disable the callback temporarily to allow the system to handle the back pressed event. This usage
-//        // breaks predictive back gesture behavior and should be reviewed before enabling the predictive back
-//        // gesture feature.
-//        isEnabled = false
-//        onBackPressedDispatcher.onBackPressed()
-//        isEnabled = true
-//      }
-//    })
+    onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+      override fun handleOnBackPressed() {
+        mIsKeyboardOpen = false
+        showActionBarIfNeeded()
+
+        // Disable the callback temporarily to allow the system to handle the back pressed event. This usage
+        // breaks predictive back gesture behavior and should be reviewed before enabling the predictive back
+        // gesture feature.
+        isEnabled = false
+        onBackPressedDispatcher.onBackPressed()
+        isEnabled = true
+      }
+    })
 
     // Setup hiding the action bar when the soft keyboard is displayed for narrow viewports
     if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
@@ -101,6 +95,7 @@ class DetailNoteActivity : AppCompatActivity(),
       mHideActionBarOnSoftKeyboardUp = true
     }
 
+    // set navigation back button as insert
     onBackPressedDispatcher.addCallback(
       this /* lifecycle owner */,
       object : OnBackPressedCallback(true) {
@@ -167,10 +162,14 @@ class DetailNoteActivity : AppCompatActivity(),
           aztec.sourceEditor?.redo()
         }
 
-      else -> {
+      // back button on action bar as insert
+      android.R.id.home -> {
+        insertNote()
+        finish()
       }
-    }
 
+      else -> super.onOptionsItemSelected(item)
+    }
     return true
   }
 
@@ -179,12 +178,10 @@ class DetailNoteActivity : AppCompatActivity(),
     menu?.findItem(R.id.undo)?.isEnabled = aztec.visualEditor.history.undoValid()
     return super.onPrepareOptionsMenu(menu)
   }
-
   // endregion ACTION BAR
 
   private fun setupAztec() {
     aztec = Aztec.with(binding.etDescription, binding.source, binding.formattingToolbar, this)
-      .setOnImeBackListener(this)
       .setOnTouchListener(this)
       .setHistoryListener(this)
 
@@ -212,7 +209,6 @@ class DetailNoteActivity : AppCompatActivity(),
     aztec.addPlugin(CssUnderlinePlugin())
     aztec.addPlugin(CssBackgroundColorPlugin())
     aztec.addPlugin(BackgroundColorButton(binding.etDescription))
-
 
     invalidateOptionsHandler = Handler(Looper.getMainLooper())
     invalidateOptionsRunnable = Runnable { invalidateOptionsMenu() }
@@ -285,15 +281,15 @@ class DetailNoteActivity : AppCompatActivity(),
 
   private fun insertNote() {
     // insert when title or description is filled
-    if ((binding.etTitle.text.isNotEmpty() || binding.etTitle.text.isNotBlank())
-      && (binding.etDescription.text.isNotEmpty() || binding.etDescription.text.isNotBlank())
+    if ((binding.etTitle.text.isNotEmpty() || binding.etDescription.text.isNotEmpty())
+      && (binding.etTitle.text.isNotBlank() || binding.etDescription.text.isNotBlank())
       && !isUpdate
     ) {
       // add note
       val note = Note(
         id = 0,
         title = binding.etTitle.text.toString(),
-        description = binding.etDescription.getSelectedText(),
+        description = binding.etDescription.toFormattedHtml(),
         dateModified = System.currentTimeMillis(),
         hide = false,
       )
@@ -313,17 +309,6 @@ class DetailNoteActivity : AppCompatActivity(),
 
   private fun showToast(text: String) {
     Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
-  }
-
-  override fun onSupportNavigateUp(): Boolean {
-    insertNote()
-    finish()
-    return true
-  }
-
-  override fun onImeBack() {
-    mIsKeyboardOpen = false
-    showActionBarIfNeeded()
   }
 
   // region UNDO REDO
@@ -354,7 +339,7 @@ class DetailNoteActivity : AppCompatActivity(),
   override fun onToolbarExpandButtonClicked() {}
 
   override fun onToolbarFormatButtonClicked(format: ITextFormat, isKeyboardShortcut: Boolean) {
-    ToastUtils.showToast(this, format.toString())
+//    ToastUtils.showToast(this, format.toString())
   }
 
   override fun onToolbarHeadingButtonClicked() {}
@@ -405,10 +390,6 @@ class DetailNoteActivity : AppCompatActivity(),
       mHideActionBarOnSoftKeyboardUp = false
       showActionBarIfNeeded()
     }
-  }
-
-  override fun onMenuItemClick(p0: MenuItem?): Boolean {
-    return true
   }
 
   override fun onPause() {
