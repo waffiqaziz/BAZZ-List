@@ -15,22 +15,14 @@ capabilities.
 - **Multi-Selection Mode:** Long-press to select multiple notes and perform batch operations.
 - **Navigation:** Smooth transitions between different views and activities.
 
-## Screenshots
+### Screenshots
 
-### Main Screen
+<p >
+  <img src="img/image1.jpg" width="200"  alt="main screen"/>
+  <img src="img/image2.jpg" width="200"  alt="note editor"/>
+</p>
 
-<img src="img/ss2.png" width="400" />
-*Main screen with list of notes*
-
-### Navigation
-
-<img src="img/ss1.png" width="400" />
-*Navigate between pages*
-
-### Note Editor
-
-<img src="img/ss3.png" width="400" />
-*Note editor for creating and modifying notes*
+*Screenshots showing the main screen and note editor.*
 
 ## Getting Started
 
@@ -56,6 +48,7 @@ To run BAZZ List on your local machine, follow these steps:
 - Android Jetpack Library (Room, Navigation Component)
 - RecyclerView
 - CardView
+- Material 3
 - [AztecEditor](https://github.com/wordpress-mobile/AztecEditor-Android) - Licensed under [Mozilla Public License 2.0](http://mozilla.org/MPL/2.0/)
 
 ## Contributing
