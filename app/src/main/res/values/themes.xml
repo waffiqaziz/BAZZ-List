@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
   <!-- Base application theme. -->
-  <style name="Theme.BAZZList" parent="Theme.MaterialComponents.Light.NoActionBar">
+  <style name="Theme.BAZZList" parent="Theme.Material3.Light.NoActionBar">
     <item name="fontFamily">@font/nunito_sans_regular</item>
 
     <!-- Primary brand color. -->
@@ -20,9 +20,9 @@
     <item name="android:windowLightStatusBar">false</item>
   </style>
 
-  <style name="Theme.BAZZList.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+  <style name="Theme.BAZZList.AppBarOverlay" parent="ThemeOverlay.Material3.Toolbar.Surface" />
 
-  <style name="Theme.BAZZList.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+  <style name="Theme.BAZZList.PopupOverlay" parent="ThemeOverlay.Material3.Light" />
 
   <style name="SplashScreenTheme" parent="Theme.SplashScreen">
     <item name="windowSplashScreenAnimatedIcon">@drawable/splash_inset</item>
@@ -31,7 +31,7 @@
     <item name="postSplashScreenTheme">@style/Theme.BAZZList</item>
   </style>
 
-  <style name="MyThemeOverlay_Toolbar" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+  <style name="MyThemeOverlay_Toolbar" parent="ThemeOverlay.Material3.Toolbar.Surface">
     <item name="colorOnPrimary">@color/gray_900</item>
     <item name="colorControlNormal">@color/gray_900</item>
     <item name="fontFamily">@font/nunito_sans_bold</item>
@@ -39,5 +39,11 @@
 
   <style name="HeaderNavigationText">
     <item name="android:textColor">@color/gray_900</item>
+  </style>
+
+  <style name="ButtonWarning" parent="Widget.Material3.Button.TonalButton">
+    <item name="android:textAllCaps">false</item>
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
   </style>
 </resources>

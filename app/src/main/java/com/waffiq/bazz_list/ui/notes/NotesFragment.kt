@@ -14,7 +14,9 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.waffiq.bazz_list.R
+import com.waffiq.bazz_list.databinding.BottomSheetWarningBinding
 import com.waffiq.bazz_list.databinding.FragmentNotesBinding
 import com.waffiq.bazz_list.domain.model.Note
 import com.waffiq.bazz_list.ui.adapter.NotesAdapter
@@ -78,7 +80,7 @@ class NotesFragment : Fragment(), OnFabClickListener {
       override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return when (menuItem.itemId) {
           R.id.action_delete -> {
-            deleteSelectedItems()
+            showWarningDialog()
             true
           }
 
@@ -167,6 +169,24 @@ class NotesFragment : Fragment(), OnFabClickListener {
     isMultiSelect = false
     notesAdapter.clearSelection()
     updateMenuItemsVisibility()
+  }
+
+  private fun showWarningDialog() {
+    val dialog = BottomSheetDialog(requireContext())
+    val btnSheet: BottomSheetWarningBinding = BottomSheetWarningBinding.inflate(layoutInflater)
+    dialog.setContentView(btnSheet.root)
+
+    btnSheet.btnDelete.setOnClickListener {
+      dialog.dismiss()
+      deleteSelectedItems()
+    }
+
+    btnSheet.btnCancel.setOnClickListener {
+      dialog.dismiss()
+      cancelSelectionMode()
+    }
+
+    dialog.show()
   }
 
   // show or hide cancel, delete action and FAB

@@ -85,4 +85,6 @@ dependencies {
   // Aztec
   implementation("org.wordpress:utils:3.5.0")
   api("org.wordpress:aztec:v2.1.4")
+
+  implementation ("com.google.android.material:material:1.12.0")
 }

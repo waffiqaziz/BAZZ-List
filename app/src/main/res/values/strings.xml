@@ -29,4 +29,7 @@
   <!-- others -->
   <string name="menu_slideshow">Slideshow</string>
   <string name="operation_successful">Operation successful</string>
+  <string name="delete_note">Delete Note</string>
+  <string name="delete">Delete</string>
+  <string name="this_action_cannot_be_undone">This action cannot be undone. Are you sure you want to proceed?</string>
 </resources>
