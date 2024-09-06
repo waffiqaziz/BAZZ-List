@@ -18,6 +18,7 @@ import com.google.android.material.navigation.NavigationView
 import com.waffiq.bazz_list.R
 import com.waffiq.bazz_list.databinding.ActivityMainBinding
 import com.waffiq.bazz_list.utils.helper.FabController
+import com.waffiq.bazz_list.utils.helper.Helpers.setupStatusBar
 import com.waffiq.bazz_list.utils.helper.OnFabClickListener
 
 class MainActivity : AppCompatActivity(), FabController {
@@ -53,39 +54,6 @@ class MainActivity : AppCompatActivity(), FabController {
 
     setupStatusBar()
     fabClickListener()
-  }
-
-  private fun setupStatusBar() {
-    // change icon color status bar based on light/dark mode
-    when (this.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
-      Configuration.UI_MODE_NIGHT_YES -> {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-          window.insetsController?.setSystemBarsAppearance(
-            0,
-            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
-          )
-        } else {
-          @Suppress("DEPRECATION")
-          window.decorView.systemUiVisibility = 0
-        }
-      }
-
-      Configuration.UI_MODE_NIGHT_NO -> {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-          window.insetsController?.setSystemBarsAppearance(
-            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
-            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
-          )
-        } else {
-          @Suppress("DEPRECATION")
-          window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        }
-      }
-
-      Configuration.UI_MODE_NIGHT_UNDEFINED -> {
-      }
-
-    }
   }
 
   // implemented fab

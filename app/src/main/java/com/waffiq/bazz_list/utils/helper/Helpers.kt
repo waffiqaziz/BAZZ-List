@@ -1,5 +1,10 @@
 package com.waffiq.bazz_list.utils.helper
 
+import android.app.Activity
+import android.content.res.Configuration
+import android.os.Build
+import android.view.View
+import android.view.WindowInsetsController
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -67,5 +72,38 @@ object Helpers {
 
   fun dateNow(): String {
     return SimpleDateFormat("EEEE, MMMM dd yyyy  |  HH:mm ", Locale.getDefault()).format(Date())
+  }
+
+  fun Activity.setupStatusBar() {
+    // change icon color status bar based on light/dark mode
+    when (this.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)) {
+      Configuration.UI_MODE_NIGHT_YES -> {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+          window.insetsController?.setSystemBarsAppearance(
+            0,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+          )
+        } else {
+          @Suppress("DEPRECATION")
+          window.decorView.systemUiVisibility = 0
+        }
+      }
+
+      Configuration.UI_MODE_NIGHT_NO -> {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+          window.insetsController?.setSystemBarsAppearance(
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+          )
+        } else {
+          @Suppress("DEPRECATION")
+          window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
+      }
+
+      Configuration.UI_MODE_NIGHT_UNDEFINED -> {
+      }
+
+    }
   }
 }

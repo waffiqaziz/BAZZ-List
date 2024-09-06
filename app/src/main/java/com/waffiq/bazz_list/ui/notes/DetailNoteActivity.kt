@@ -29,6 +29,7 @@ import com.waffiq.bazz_list.ui.viewmodelfactory.ViewModelFactory
 import com.waffiq.bazz_list.utils.helper.DbResult
 import com.waffiq.bazz_list.utils.helper.Helpers.dateNow
 import com.waffiq.bazz_list.utils.helper.Helpers.formatTimestamp
+import com.waffiq.bazz_list.utils.helper.Helpers.setupStatusBar
 import org.wordpress.android.util.ToastUtils
 import org.wordpress.aztec.Aztec
 import org.wordpress.aztec.AztecExceptionHandler
@@ -70,6 +71,7 @@ class DetailNoteActivity : AppCompatActivity(),
     val factory = ViewModelFactory.getInstance(this)
     detailNoteViewModel = ViewModelProvider(this, factory)[DetailNoteViewModel::class.java]
 
+    setupStatusBar()
     setSupportActionBar(binding.toolbar)
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
     supportActionBar?.setDisplayShowHomeEnabled(true)
