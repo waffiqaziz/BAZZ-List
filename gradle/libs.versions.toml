@@ -1,0 +1,61 @@
+[versions]
+agp = "8.2.0"
+kotlin = "1.9.10"
+ksp = "1.9.10-1.0.13"
+
+coreKtx = "1.13.1"
+coreSplashscreen = "1.0.1"
+appcompat = "1.7.0"
+material = "1.12.0"
+constraintlayout = "2.1.4"
+lifecycleLivedataKtx = "2.8.4"
+lifecycleViewmodelKtx = "2.8.4"
+navigationFragmentKtx = "2.7.7"
+navigationUiKtx = "2.7.7"
+
+junit = "4.13.2"
+testExtJunit = "1.2.1"
+espressoCore = "3.6.1"
+
+desugarJdkLibs = "2.0.4"
+
+roomRuntime = "2.6.1"
+roomKtx = "2.6.1"
+legacySupportV4 = "1.0.0"
+roomCompiler = "2.6.1"
+
+aztec = "2.1.4"
+wordpressUtil = "3.5.0"
+
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
+androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomRuntime" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
+androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
+androidx-room-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomCompiler" }
+
+wordpressUtils = { group = "org.wordpress", name = "utils", version.ref = "wordpressUtil" }
+aztec = { group = "org.wordpress", name = "aztec", version.ref = "aztec" }
+
+google-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "testExtJunit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+
+desugar-jdk-libs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugarJdkLibs" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

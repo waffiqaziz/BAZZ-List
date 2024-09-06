@@ -1,8 +1,8 @@
 plugins {
-  id("com.android.application")
-  id("org.jetbrains.kotlin.android")
-  id("kotlin-parcelize")
-  id("com.google.devtools.ksp")
+  alias(libs.plugins.android.application)   // Android application plugin
+  alias(libs.plugins.kotlin.android)        // Kotlin plugin for Android
+  id("kotlin-parcelize")                    // Kotlin Parcelize plugin
+  alias(libs.plugins.ksp)                   // Kotlin Symbol Processing (KSP) plugin
 }
 
 android {
@@ -59,32 +59,29 @@ android {
 }
 
 dependencies {
+  implementation(libs.androidx.core.ktx)
+  implementation(libs.androidx.core.splashscreen)
+  implementation(libs.androidx.appcompat)
+  implementation(libs.google.material)
+  implementation(libs.androidx.constraintlayout)
+  implementation(libs.androidx.lifecycle.livedata.ktx)
+  implementation(libs.androidx.lifecycle.viewmodel.ktx)
+  implementation(libs.androidx.navigation.fragment.ktx)
+  implementation(libs.androidx.navigation.ui.ktx)
 
-  implementation("androidx.core:core-ktx:1.13.1")
-  implementation("androidx.core:core-splashscreen:1.0.1")
-  implementation("androidx.appcompat:appcompat:1.7.0")
-  implementation("com.google.android.material:material:1.12.0")
-  implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-  implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.4")
-  implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
-  implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
-  implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+  testImplementation(libs.junit)
+  androidTestImplementation(libs.androidx.test.ext.junit)
+  androidTestImplementation(libs.espresso.core)
 
-  testImplementation("junit:junit:4.13.2")
-  androidTestImplementation("androidx.test.ext:junit:1.2.1")
-  androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
-
-  coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+  coreLibraryDesugaring(libs.desugar.jdk.libs)
 
   // room database
-  implementation("androidx.room:room-runtime:2.6.1")
-  implementation("androidx.room:room-ktx:2.6.1")
-  implementation("androidx.legacy:legacy-support-v4:1.0.0")
-  ksp("androidx.room:room-compiler:2.6.1")
+  implementation(libs.androidx.room.runtime)
+  implementation(libs.androidx.room.ktx)
+  implementation(libs.androidx.legacy.support.v4)
+  ksp(libs.androidx.room.room.compiler)
 
   // Aztec
-  implementation("org.wordpress:utils:3.5.0")
-  api("org.wordpress:aztec:v2.1.4")
-
-  implementation ("com.google.android.material:material:1.12.0")
+  implementation(libs.wordpressUtils)
+  api(libs.aztec)
 }
