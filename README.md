@@ -44,12 +44,10 @@ To run BAZZ List on your local machine, follow these steps:
 
 ## Dependencies
 
-- Kotlin
-- Android Jetpack Library (Room, Navigation Component)
-- RecyclerView
-- CardView
+- Android Jetpack Library (Room database, Navigation Component, RecyclerView)
+- Koin dependency injection
 - Material 3
-- [AztecEditor](https://github.com/wordpress-mobile/AztecEditor-Android) - Licensed under [Mozilla Public License 2.0](http://mozilla.org/MPL/2.0/)
+- [AztecEditor](https://github.com/wordpress-mobile/AztecEditor-Android)
 
 ## Contributing
 
@@ -69,6 +67,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 Please note that this project includes components that are licensed under different terms:
 
-- The `AztecEditor` library is licensed under the [Mozilla Public License 2.0 (MPL 2.0)](http://mozilla.org/MPL/2.0/). See the `LICENSES/MPL-2.0.txt` file for more details.
+- The `AztecEditor` library is licensed under the [Mozilla Public License 2.0 (MPL 2.0)](http://mozilla.org/MPL/2.0/). See the `LICENSES/MPL-2.0.txt` or click [here](LICENSES/MPL-2.0.txt) file for more details.
 
 *If you have any questions or suggestions, feel free to reach out.
