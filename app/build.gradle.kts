@@ -83,5 +83,10 @@ dependencies {
 
   // Aztec
   implementation(libs.wordpressUtils)
-  api(libs.aztec)
+  api(libs.aztec.vv214)
+
+  // Koin
+  implementation(libs.koin.core)
+  implementation(libs.koin.android)
+  implementation(libs.koin.androidx.navigation)
 }

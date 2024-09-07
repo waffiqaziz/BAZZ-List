@@ -2,6 +2,7 @@
 agp = "8.2.0"
 kotlin = "1.9.10"
 ksp = "1.9.10-1.0.13"
+koin = "3.4.0"
 
 coreKtx = "1.13.1"
 coreSplashscreen = "1.0.1"
@@ -24,7 +25,7 @@ roomKtx = "2.6.1"
 legacySupportV4 = "1.0.0"
 roomCompiler = "2.6.1"
 
-aztec = "2.1.4"
+aztecVersion = "v2.1.4"
 wordpressUtil = "3.5.0"
 
 
@@ -43,8 +44,8 @@ androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = 
 androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
 androidx-room-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomCompiler" }
 
+aztec-vv214 = { module = "org.wordpress:aztec", version.ref = "aztecVersion" }
 wordpressUtils = { group = "org.wordpress", name = "utils", version.ref = "wordpressUtil" }
-aztec = { group = "org.wordpress", name = "aztec", version.ref = "aztec" }
 
 google-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
@@ -53,6 +54,11 @@ androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 
 desugar-jdk-libs = { group = "com.android.tools", name = "desugar_jdk_libs", version.ref = "desugarJdkLibs" }
+
+koin-core =  { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-android =  { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+koin-androidx-navigation =  { group = "io.insert-koin", name = "koin-androidx-navigation", version.ref = "koin" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

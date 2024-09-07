@@ -4,7 +4,7 @@
   android:id="@+id/notes_fragment"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".ui.notes.NotesFragment">
+  tools:context=".listnotes.NotesFragment">
 
   <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     android:id="@+id/swipe_refresh"
