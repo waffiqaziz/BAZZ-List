@@ -2,16 +2,13 @@ package com.waffiq.bazz_list.di
 
 import com.waffiq.bazz_list.core.domain.usecase.note.NotesInteractor
 import com.waffiq.bazz_list.core.domain.usecase.note.NotesUseCase
-import com.waffiq.bazz_list.detailnotes.DetailNoteViewModel
-import com.waffiq.bazz_list.listnotes.NotesViewModel
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.module
+import dagger.Binds
+import dagger.Module
 
-val useCaseModule = module {
-  factory<NotesUseCase> { NotesInteractor(get()) }
-}
+@Module
+abstract class AppModule {
 
-val viewModelModule = module {
-  viewModel { DetailNoteViewModel(get()) }
-  viewModel { NotesViewModel(get()) }
+  @Binds
+  abstract fun provideNotesUsecase(notesInteractor: NotesInteractor): NotesUseCase
+
 }

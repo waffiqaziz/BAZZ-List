@@ -3,8 +3,9 @@ package com.waffiq.bazz_list.core.domain.usecase.note
 import com.waffiq.bazz_list.core.domain.repository.INoteRepository
 import com.waffiq.bazz_list.core.domain.model.Note
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class NotesInteractor(
+class NotesInteractor @Inject constructor(
   private val iNoteRepository: INoteRepository
 ) : NotesUseCase {
   override val notes: Flow<List<Note>> = iNoteRepository.getAllNotes

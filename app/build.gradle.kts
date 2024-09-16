@@ -85,8 +85,12 @@ dependencies {
   implementation(libs.wordpressUtils)
   api(libs.aztec.vv214)
 
-  // Koin
-  implementation(libs.koin.core)
-  implementation(libs.koin.android)
-  implementation(libs.koin.androidx.navigation)
+//  // Koin
+//  implementation(libs.koin.core)
+//  implementation(libs.koin.android)
+//  implementation(libs.koin.androidx.navigation)
+
+  // Dagger
+  implementation(libs.dagger)
+  ksp(libs.dagger.ksp)
 }

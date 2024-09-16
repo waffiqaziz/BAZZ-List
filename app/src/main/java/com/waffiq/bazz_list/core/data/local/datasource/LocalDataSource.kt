@@ -5,8 +5,11 @@ import com.waffiq.bazz_list.core.data.local.room.NoteDao
 import com.waffiq.bazz_list.core.domain.model.Note
 import com.waffiq.bazz_list.core.utils.helper.DbResult
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class LocalDataSource(private val noteDao: NoteDao) : LocalDataSourceInterface {
+@Singleton
+class LocalDataSource @Inject constructor(private val noteDao: NoteDao) : LocalDataSourceInterface {
   override fun getAllNotes(): Flow<List<NoteEntity>> = noteDao.getAllNotes()
   override fun getAllNotesSortDateDesc() = noteDao.getAllNotesSortDateDesc()
 

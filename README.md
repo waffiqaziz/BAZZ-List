@@ -45,7 +45,7 @@ To run BAZZ List on your local machine, follow these steps:
 ## Dependencies
 
 - Android Jetpack Library (Room database, Navigation Component, RecyclerView)
-- Koin dependency injection
+- Dagger dependency injection
 - Material 3
 - [AztecEditor](https://github.com/wordpress-mobile/AztecEditor-Android)
 

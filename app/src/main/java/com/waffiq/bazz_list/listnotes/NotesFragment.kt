@@ -12,10 +12,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.waffiq.bazz_list.MyApplication
 import com.waffiq.bazz_list.R
 import com.waffiq.bazz_list.core.domain.model.Note
+import com.waffiq.bazz_list.core.ui.ViewModelFactory
 import com.waffiq.bazz_list.core.ui.adapter.NotesAdapter
 import com.waffiq.bazz_list.core.utils.helper.DbResult
 import com.waffiq.bazz_list.core.utils.helper.FabController
@@ -23,15 +26,20 @@ import com.waffiq.bazz_list.core.utils.helper.OnFabClickListener
 import com.waffiq.bazz_list.databinding.BottomSheetWarningBinding
 import com.waffiq.bazz_list.databinding.FragmentNotesBinding
 import com.waffiq.bazz_list.detailnotes.DetailNoteActivity
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
 class NotesFragment : Fragment(), OnFabClickListener {
 
   private var _binding: FragmentNotesBinding? = null
   private val binding get() = _binding!!
 
-  private val notesViewModel: NotesViewModel by viewModel()
+  @Inject
+  lateinit var factory: ViewModelFactory
+
+  private val notesViewModel: NotesViewModel by viewModels { factory }
+
   private lateinit var notesAdapter: NotesAdapter
+
 
   private val selectedItems = mutableSetOf<Note>()
   private var isMultiSelect = false
@@ -42,6 +50,7 @@ class NotesFragment : Fragment(), OnFabClickListener {
 
   override fun onAttach(context: Context) {
     super.onAttach(context)
+    (requireActivity().application as MyApplication).appComponent.inject(this)
     if (context is FabController) {
       fabController = context
     } else {

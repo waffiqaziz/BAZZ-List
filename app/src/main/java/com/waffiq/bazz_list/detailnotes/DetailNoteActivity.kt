@@ -19,16 +19,18 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.waffiq.bazz_list.MyApplication
 import com.waffiq.bazz_list.R
 import com.waffiq.bazz_list.core.domain.model.Note
+import com.waffiq.bazz_list.core.ui.ViewModelFactory
 import com.waffiq.bazz_list.core.utils.helper.DbResult
 import com.waffiq.bazz_list.core.utils.helper.Helpers.dateNow
 import com.waffiq.bazz_list.core.utils.helper.Helpers.formatTimestamp
 import com.waffiq.bazz_list.core.utils.helper.Helpers.setupStatusBar
 import com.waffiq.bazz_list.databinding.ActivityDetailNoteBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.wordpress.android.util.ToastUtils
 import org.wordpress.aztec.Aztec
 import org.wordpress.aztec.AztecExceptionHandler
@@ -41,6 +43,7 @@ import org.wordpress.aztec.plugins.CssUnderlinePlugin
 import org.wordpress.aztec.toolbar.IAztecToolbarClickListener
 import org.wordpress.aztec.util.AztecLog
 import org.xml.sax.Attributes
+import javax.inject.Inject
 
 class DetailNoteActivity : AppCompatActivity(),
   IAztecToolbarClickListener,
@@ -48,7 +51,11 @@ class DetailNoteActivity : AppCompatActivity(),
   View.OnTouchListener {
 
   private lateinit var binding: ActivityDetailNoteBinding
-  private val detailNoteViewModel: DetailNoteViewModel by viewModel()
+
+  @Inject
+  lateinit var factory: ViewModelFactory
+
+  private val detailNoteViewModel: DetailNoteViewModel by viewModels { factory }
 
   private lateinit var dataExtra: Note
 
@@ -63,6 +70,7 @@ class DetailNoteActivity : AppCompatActivity(),
   private var mHideActionBarOnSoftKeyboardUp = false
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    (application as MyApplication).appComponent.inject(this)
     super.onCreate(savedInstanceState)
     binding = ActivityDetailNoteBinding.inflate(layoutInflater)
     setContentView(binding.root)

@@ -8,8 +8,11 @@ import com.waffiq.bazz_list.core.utils.mappers.NoteMapper.toNote
 import com.waffiq.bazz_list.core.utils.mappers.NoteMapper.toNoteEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class NoteRepository(
+@Singleton
+class NoteRepository @Inject constructor(
   private val localDataSource: LocalDataSource
 ) : INoteRepository {
   override val getAllNotes: Flow<List<Note>> =
