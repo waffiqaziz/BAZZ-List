@@ -9,8 +9,9 @@ import com.waffiq.bazz_list.core.domain.usecase.note.NotesUseCase
 import com.waffiq.bazz_list.core.utils.common.Event
 import com.waffiq.bazz_list.core.utils.helper.DbResult
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailNoteViewModel(
+class DetailNoteViewModel @Inject constructor(
   private val notesUseCase: NotesUseCase
 ): ViewModel() {
 

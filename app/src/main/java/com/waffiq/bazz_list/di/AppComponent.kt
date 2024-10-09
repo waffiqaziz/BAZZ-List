@@ -1,6 +1,7 @@
 package com.waffiq.bazz_list.di
 
 import com.waffiq.bazz_list.core.di.CoreComponent
+import com.waffiq.bazz_list.core.di.ViewModelModule
 import com.waffiq.bazz_list.detailnotes.DetailNoteActivity
 import com.waffiq.bazz_list.listnotes.NotesFragment
 import dagger.Component
@@ -8,7 +9,7 @@ import dagger.Component
 @AppScope
 @Component(
   dependencies = [CoreComponent::class],
-  modules = [AppModule::class]
+  modules = [AppModule::class, ViewModelModule::class]
 )
 interface AppComponent {
   @Component.Factory
